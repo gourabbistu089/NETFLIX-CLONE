@@ -1,10 +1,11 @@
+import { createBrowserRouter } from 'react-router-dom'
 import './App.css'
-
+import Body from './components/Body.jsx'
 function App() {
 
   return (
     <>
-    <h1 className=' bg-red-400 text-lg'>Netflix Gpt</h1>
+    <Body/>
     </>
   )
 }

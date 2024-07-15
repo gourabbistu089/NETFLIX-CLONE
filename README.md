@@ -21,3 +21,10 @@ https://www.freecodecamp.org/news/how-to-install-tailwindcss-in-react/
     - Search bar
     - Movie Suggestion
  
+
+
+
+
+
+
+
