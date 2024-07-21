@@ -1,6 +1,22 @@
 import React from 'react';
+import profile from '../assets/assets/profile_img.png'
+import { signOut } from "firebase/auth";
+import { auth } from '../utlis/firebase';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Header() {
+  const user = useSelector(store => store.user)
+  const navigate = useNavigate()
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      navigate('/')
+    }).catch((error) => {
+      // An error happened.
+      alert("Something wrong")
+    });
+  }
   return (
     <div className="flex justify-between p-3 m-3 bg-cover">
       <div>
@@ -16,9 +32,16 @@ function Header() {
           <option value="en">English</option>
           <option value="hi">Hindi</option>
         </select>
-        <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded">
-          Sign In
+      {
+        user && <>
+          <img src={user.photoURL} className=' w-12' alt="" />
+        <button
+          onClick={handleSignOut}
+          className="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded">
+          Sign Out
         </button>
+        </>
+      }
       </div>
     </div>
   );

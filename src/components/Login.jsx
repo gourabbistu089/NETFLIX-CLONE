@@ -3,9 +3,14 @@ import Header from './Header';
 import netflixBg from '../assets/netflixBg.webp';
 import { checkValidate } from '../utlis/validate';
 import { auth } from '../utlis/firebase';
-import { createUserWithEmailAndPassword ,signInWithEmailAndPassword} from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utlis/userSlice';
 
 const Login = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [isSignInForm, setIsSignInForm] = useState(true)
     const [errorMsg, setErrorMsg] = useState()
     const email = useRef(null)
@@ -18,39 +23,51 @@ const Login = () => {
     }
     const handleBtnClick = () => {
         const message = checkValidate(email.current.value, password.current.value)
-        console.log(message)
+        // console.log(message)
         setErrorMsg(message)
-        if (message!==null) {console.log("message") ;return;}
+        if (message !== null) { console.log("message"); return; }
 
-        if (!isSignInForm)  { //Sign Up 
+        if (!isSignInForm) { //Sign Up 
 
             createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
-                console.log(user)
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert("Something went wrong -- ", errorCode + " "+errorMessage)
-            });
+                .then((userCredential) => {
+                    // Signed up 
+                    const user = userCredential.user;
+                    updateProfile(user, {
+                        displayName: name.current.value, photoURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVNQuCsZBXOiaBc1VDwuCaCzG3RbpRAeOPaQ&s"
+                    }).then(() => {
+                        console.log(user)
+                        const {uid,email,displayName,photoURL} = auth.currentUser;
+                        dispatch(addUser({uid:uid, email:email,displayName:displayName , photoURL:photoURL}))
+                        navigate('/browse')
+
+                    }).catch((error) => {
+                        console.log(error)
+                    });
+
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert("Something went wrong -- ", errorCode + " " + errorMessage)
+                });
         }
 
         else {  //Sign In
 
-            signInWithEmailAndPassword(auth,email.current.value, password.current.value)
-              .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                console.log(user)
-                alert("Succeess")
-              })
-              .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert("Something went wrong -- ", errorCode + " "+errorMessage)
-              });
+            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    console.log(user)
+                    navigate('/browse')
+                    alert("Succeess")
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert("Something went wrong -- ", errorCode + " " + errorMessage)
+                });
         }
 
 
