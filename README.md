@@ -4,6 +4,19 @@ https://www.freecodecamp.org/news/how-to-install-tailwindcss-in-react/
 # Netflix Gpt
 - Create React App
 - configure tailwind css
+- Header
+- Routing
+- Login
+- Signup 
+- Form Validation
+- useRef Hook
+- firebase setup
+- deploy at production
+- create signup user account
+- Implement Sigh In user api
+- Created redux store with userSlice
+
+
 
 # Features 
 - Login/ Signup
