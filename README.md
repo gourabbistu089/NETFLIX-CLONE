@@ -15,7 +15,18 @@ https://www.freecodecamp.org/news/how-to-install-tailwindcss-in-react/
 - create signup user account
 - Implement Sigh In user api
 - Created redux store with userSlice
-
+- Implement sign out
+- Sign up User Display and Profile picture update
+- if user not login redirect /browse login page and vie versa
+- Unsubscribed to the onAuthStateChange callback
+- Get Data from TMDB now playing movies
+- custom hooks for now playing movies 
+- update store with movie data
+- create movie slice 
+- plainning for main and secondary container fetch data for trailer video update store with trailer video data
+- embedded the yt video 
+- make it auto play and mute 
+- tailwind classes to make it look awesome 
 
 
 # Features 
